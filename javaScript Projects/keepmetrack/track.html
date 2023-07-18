@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Track</title>
+    <style>
+        body{
+            margin: 0;
+            background-color: whitesmoke;
+            button:hover {
+    background-color: #432000;
+    cursor: pointer;
+}
+        }
+        #input-el{
+            padding: 15px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            border-radius: 5px;
+            background-color: rgb(243, 236, 236);
+            border: 1px solid rgb(243, 236, 236);
+            border: none;
+            outline: none;
+            text-align: center;
+  
+        }
+        #input-el:hover{
+            box-shadow: 0px 12px 12px 0px grey;
+            border:1px solid rgb(243, 236, 236);
+            border: none;
+            outline: none;
+        }
+      
+        #add-btn{
+            padding: 15px;
+            color: whitesmoke;
+            background-color: rgba(180, 54, 73, 0.97);
+            width:320px;
+            border-radius: 5px;
+            border: 1px solid  rgba(180, 54, 73, 0.97);
+            font-size: 20px;
+            text-align: center;
+  
+        }
+        #add-btn:hover{
+            box-shadow: 0px 12px 12px 0px grey;
+            border: 1px solid  rgba(180, 54, 73, 0.97);
+        }
+        .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+    margin: 30px auto;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+ul li {
+    font-size: 20px;
+    background-color: #FFFDF8;
+    padding: 15px;
+    border-radius: 8px;
+    flex-grow: 1;
+    text-align: center;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
+}
+ul li:hover {
+    background-color: #FFECC7;
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <img src="https://i.gifer.com/origin/35/35f248b92c15cb3cf13cb867d40d09eb_w200.webp" alt="cute">
+    <br>
+    <br>
+    <input type="text" id="input-el" placeholder="Bread">
+    <br>
+    <button id="add-btn">Add Me </button>
+    <ul id="info"></ul>
+</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
+import { getDatabase, ref, push, onValue, remove } from  "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+
+const appSettings = {
+    databaseURL: "https://cart-3e8c5-default-rtdb.firebaseio.com/"
+}
+
+const app = initializeApp(appSettings)
+
+const database = getDatabase(app)
+
+const infoDb = ref(database, "infome")
+
+const addBtn = document.getElementById("add-btn")
+const inputEl = document.getElementById("input-el")
+let shoppingListEl = document.getElementById("info")
+addBtn.addEventListener("click", function(){
+     let s = inputEl.value
+     push(infoDb, s)
+     clearinputEl()
+    // addintolist(s)
+})
+function clearShoppingListEl() {
+    document.getElementById("info").innerHTML = ""
+}
+
+function clearinputEl(){
+    inputEl.value = ""
+}
+function addintolist(item){
+    //document.getElementById("info").innerHTML += `<li>${a}</li>`
+    let itemID = item[0]
+    let itemValue = item[1]
+    
+    let newEl = document.createElement("li")
+    
+    newEl.textContent = itemValue
+        
+    newEl.addEventListener("dblclick", function() {
+        let exactLocationOfStoryInDB = ref(database, `infome/${itemID}`)
+        
+        remove(exactLocationOfStoryInDB)
+    })
+    
+
+    shoppingListEl.append(newEl)
+}
+onValue(infoDb, function(snapshot){
+    
+    if(snapshot.exists()){
+
+        let item = Object.entries(snapshot.val())
+        clearShoppingListEl()
+        for(let i = 0; i < item.length; i++){
+                let currentItem = item[i]
+                let currentItemID = currentItem[0]
+                let currentItemValue = currentItem[1]
+        
+        addintolist(currentItem)
+   
+   }
+  
+    }
+    else{
+    shoppingListEl.innerHTML = "No items here...yet"
+   }
+   
+})
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People Counter</title>
+    <link rel="stylesheet" href="counter.css">
+   
+</head>
+<body>
+    <style>
+        #save-el{
+    font-size: 40px;
+    text-shadow: 2px 2px 4px white;
+  
+}
+
+body {
+    background-image: url("http://wallpapercave.com/wp/PJXlT3m.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: italic;
+    text-align: center;
+    height: 100vh;
+}
+
+
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px white;
+}
+
+h2 {
+    font-size: 50px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px white;
+}
+#btn-id{
+    /* background-image: url("forest.jpg");*/
+    background-color: darkred;
+     color: black;
+     height: 50px;
+     width: 150px;
+    /* margin-left: 700px;*/
+     font-size: 25px;
+     text-shadow: 2px 2px 4px white;
+     border-radius: 5px;
+    
+ }
+ #save-id{
+     /*background-image: url("forest.jpg");*/
+     background-color: darkgreen;
+     color: black;
+     height: 50px;
+     width: 150px;
+   /* margin-left: 700px;*/
+   
+     font-size: 25px;
+     text-shadow: 2px 2px 4px white;
+     border-radius: 5px;
+   
+    
+ }
+ #btn-id:hover{
+     opacity: 0.7;
+     box-shadow: 0 12px 12px 0 white;
+ }
+ #save-id:hover{
+     opacity: 0.7;
+     box-shadow: 0 12px 12px 0 white;
+ }
+ .container {
+   
+    max-width: 80%;
+    margin: auto;
+    border: 3px solid whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0 12px 12px 0 white;
+}
+
+
+    </style>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+   <!-- <img src="forest.jpg" alt="rain-forest">-->
+   <div class="container">
+    <h1 id="title1">WELCOME TO PEOPLE COUNTER</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+   <!-- <p id="wel-id"></p>-->
+    <h2 id="count-el">0</h2>
+  <!--onclick="myFunction()"-->
+        <button type="button" id="btn-id" onclick="increase()"> increament </button><br>
+        <br>
+        <br>
+        <button type="button" id="save-id" onclick="save()"> Save </button>
+        <p id="save-el">Previous Entries :  </p>
+    </div>
+<script>
+    //camelCase
+    let countEl = document.getElementById("count-el")
+    let c = 0
+    function increase(){
+       c = c+ 1
+       countEl.innerText=c
+
+    }
+    function save(){
+        let saveEl = document.getElementById("save-el")
+        let save = c + " - "
+        saveEl.textContent = saveEl.textContent + save
+        c = 0;
+        countEl.textContent = c
+       
+    }
+   // document.getElementById("wel-id").innerText = "Welcome back :)"
+</script>
+
+
+</body>
+</html>
